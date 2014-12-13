@@ -8,7 +8,7 @@ dir=$(dirname $0)
 cat $dir/kouho.list | while read line 
 do
   echo $line
-  searchWord=$(echo $line | cut -d, -f2 | sed 's/ //g')
+  searchWord=$(echo $line | cut -d, -f1,2 | sed -e 's/,/+/g' -e 's/ //')
   echo $searchWord
   url=$(echo "http://www.bing.com/search?q="$searchWord"&go=送信&qs=n&form=QBLH&pq="$searchWord"&sc=0-0&sp=-1&sk=")
 
