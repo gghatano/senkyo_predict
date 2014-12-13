@@ -77,12 +77,12 @@ dat_party =
 ## 結果
 dat_party
 
-## 円グラフ
-# dat_party %>% 
-#   ggplot(aes(x = "", y=NUM, fill=reorder(PARTY, ORDER))) +  
-#   theme_set(theme_gray(base_size=12, base_family="HiraKakuProN-W3")) +
-#   geom_bar(stat="identity", width=1) + coord_polar("y") + ylab("議席数") + 
-#   guides(fill=guide_legend(title=NULL)) 
+# 円グラフ
+#  dat_party %>% 
+#    ggplot(aes(x = "", y=NUM, fill=reorder(PARTY, ORDER))) +  
+#    theme_set(theme_gray(base_size=12, base_family="HiraKakuProN-W3")) +
+#    geom_bar(stat="identity", width=1) + coord_polar("y") + ylab("議席数") + 
+#    guides(fill=guide_legend(title=NULL)) 
 
 ```
 
