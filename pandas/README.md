@@ -5,24 +5,32 @@ pandas_plyを使う
 
 [pandas_ply](https://github.com/coursera/pandas-ply)を使います. 
 
-選挙のデータを使って遊んでみます. 
+pandasでRのdplyrみたいなことをする, というものです. 
+
+メソッドチェーンを使えると, コードが書きやすて楽しいです. 
+
+今回は, 選挙のデータを使って遊んでみます. 
+
+[衆院選小選挙区立候補者名と, 名前で検索した時のヒット件数のデータ](https://github.com/gghatano/senkyo_predict/blob/master/kouho.hit.list)を使って, pandas-plyで遊びます. 
 
 ## 感想
 
-そのままpandas使うより楽しい. 
+生pandas使うより楽しい. 
 
-並べ替えの方法が分からん. dplyr::arrangeに対応するのは何? 
+並べ替えの方法が分かりません. dplyr::arrangeに対応するのは何? 
 
 ## コード
 
-pandas_plyを使うまでの準備
+pandas_plyを使うまでの準備です. 
 ```python
 import pandas as pd
 from ply import install_ply, X, sym_call
 install_ply(pd)
 ```
 
-データ読み込み. 立候補者+ググった時のヒット件数のデータです. 
+データ読み込み. 
+
+立候補者名+ググった時のヒット件数のデータです. 
 ```python
 data = pd.read_csv("../kouho.hit.list", encoding="utf-8", header=0)
 
@@ -74,11 +82,11 @@ dplyr::filterに対応するのはply_whereです.
 ## under 25 
 print (data
     .ply_where(X.AGE < 30)
+    .head(10)
     )
 ```
 
 ```bash
-      BLOCK    NAME  AGE PARTY STATUS      HIT
 21    北海道7区   鈴木 貴子   28    民主      前  1670000
 88     秋田2区   緑川 貴士   29    民主      新   170000
 174    埼玉1区    松本 翔   29    社民      新  3070000
@@ -89,15 +97,35 @@ print (data
 306   東京11区   下村 芽生   27    無所      新   380000
 390   神奈川8区   若林 靖久   29    共産      新   525000
 403  神奈川12区  味村 耕太郎   25    共産      新   106000
-407  神奈川13区   伊藤 優太   29    維新      新   723000
-414  神奈川15区   沼上 徳光   28    共産      新   127000
-459    石川3区   渡辺 裕子   29    共産      新  1760000
-633    京都6区   上條 亮一   28    共産      新   221000
-672   大阪12区  堅田 壮一郎   28    維新      新   349000
-813    山口3区   藤井 岳志   28    共産      新   424000
-890    佐賀1区    古賀 誠   29    共産      新   282000
-909    熊本1区   高本 征尚   29    共産      新    36400
 ```
 
+## 検索した時のヒット数(万件)
+
+dplyr::mutateに対応する操作も, ply_selectの中で可能です. 
+
+```python
+print (data
+    .ply_select(
+      NAME=X.NAME,
+      HIT_x10000 = X.HIT / 1000
+      )
+    .head(10)
+    )
+```
+
+```bash
+   HIT_x10000    NAME
+0       153.0   横路 孝弘
+1       346.0  野呂田 博之
+2      2680.0   船橋 利実
+3       543.0   飯田 佳宏
+4       541.0   吉川 貴盛
+5      1520.0   池田 真紀
+6        74.2   松木 謙公
+7        59.2   金倉 昌俊
+8       335.0    荒井 聰
+9       303.0   吉岡 弘子
+```
+カラムの順番が入れ替わるのなんでだろう. 
 
 

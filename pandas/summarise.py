@@ -25,5 +25,13 @@ print partySummarize
 ## under 25 
 print (data
     .ply_where(X.AGE < 30)
+    .head(10)
+    )
+print (data
+    .ply_select(
+      NAME=X.NAME,
+      HIT_x10000 = X.HIT / 1000
+      )
+    .head(10)
     )
 
