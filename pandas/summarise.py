@@ -30,7 +30,7 @@ print (data
 print (data
     .ply_select(
       NAME=X.NAME,
-      HIT_x10000 = X.HIT / 1000
+      HIT_x10000 = X.HIT / 10000
       )
     .head(10)
     )
